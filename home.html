@@ -13,6 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/favIcon.png">
+
     <title>GitHub Issues Tracker || Home</title>
 
     <style>
@@ -22,8 +28,33 @@
     </style>
 </head>
 
-<body>
-    <h1 class="text-3xl font-bold text-center">GitHub Issues Tracker</h1>
+<body class="bg-[#F8FAFC] h-screen">
+    <nav class="flex justify-between px-20 py-3 items-center bg-white shadow-md sticky top-0 z-10">
+        <div class="flex gap-2 items-center">
+            <img class="w-16 h-16" src="./assets/github-logo.png" alt="GitHub Logo">
+            <h1 class="text-2xl font-semibold text-[#1F2937]">GitHub Issues Tracker</h1>
+        </div>
+
+        <div class="flex gap-2 items-center">
+            <label class="input">
+                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                        stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input type="search" required placeholder="Search" />
+            </label>
+            <button class="btn btn-outline hover: btn-primary "><i class="fa-solid fa-plus"></i> new Issue</button>
+        </div>
+    </nav>
+
+    <section class="p-10 mt-14 drop-shadow-lg rounded-lg container mx-auto bg-white space-x-2">
+        <button class="btn btn-primary px-auto py-auto">All</button>
+        <button class="btn btn-primary px-auto py-auto">Open</button>
+        <button class="btn btn-primary px-auto py-auto">Closed</button>
+    </section>
 </body>
 
 </html>

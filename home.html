@@ -28,15 +28,16 @@
     </style>
 </head>
 
-<body class="bg-[#F8FAFC] h-screen">
-    <nav class="flex justify-between px-20 py-3 items-center bg-white shadow-md sticky top-0 z-10">
+<body class="bg-[#F8FAFC] min-h-screen">
+    <nav
+        class="flex flex-col sm:flex-row sm:gap-0 gap-5 justify-between px-4 sm:px-8 lg:px-20 py-3 items-center bg-white shadow-md sticky top-0 z-10">
         <div class="flex gap-2 items-center">
-            <img class="w-16 h-16" src="./assets/github-logo.png" alt="GitHub Logo">
-            <h1 class="text-2xl font-semibold text-[#1F2937]">GitHub Issues Tracker</h1>
+            <img class="w-10 h-10 sm:w-14 sm:h-14" src="./assets/github-logo.png" alt="GitHub Logo">
+            <h1 class="sm:text-2xl text-[20px] font-semibold text-[#1F2937]">GitHub Issues Tracker</h1>
         </div>
 
         <div class="flex gap-2 items-center">
-            <label class="input">
+            <label class="input w-full sm:w-auto flex items-center gap-2">
                 <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
                         stroke="currentColor">
@@ -46,14 +47,20 @@
                 </svg>
                 <input type="search" required placeholder="Search" />
             </label>
-            <button class="btn btn-outline hover: btn-primary "><i class="fa-solid fa-plus"></i> new Issue</button>
+            <button class="btn btn-primary hover:btn-outline text-sm sm:text-base"><i class="fa-solid fa-plus"></i> new Issue</button>
         </div>
     </nav>
 
-    <section class="p-10 mt-14 drop-shadow-lg rounded-lg container mx-auto bg-white space-x-2">
-        <button class="btn btn-primary px-auto py-auto">All</button>
-        <button class="btn btn-primary px-auto py-auto">Open</button>
-        <button class="btn btn-primary px-auto py-auto">Closed</button>
+    <section
+        class="mb-6 flex flex-wrap gap-2 sm:justify-start justify-center p-4 sm:p-8 mt-6 sm:mt-12 shadow-md rounded-lg container mx-auto bg-white">
+        <button class="bg-[#4A00FF] border border-gray-200 rounded-lg text-white px-8 py-2 cursor-pointer transition-all duration-300 ease-in-out 
+                hover:shadow-2xl hover:-translate-y-1 hover:scale-105">All</button>
+
+        <button class="bg-white border border-gray-200 rounded-lg text-[#64748B] px-8 py-2 cursor-pointer transition-all duration-300 ease-in-out 
+                hover:shadow-2xl hover:-translate-y-1 hover:scale-105">Open</button>
+
+        <button class="bg-white border border-gray-200 rounded-lg text-[#64748B] px-8 py-2 cursor-pointer transition-all duration-300 ease-in-out 
+                hover:shadow-2xl hover:-translate-y-1 hover:scale-105">Closed</button>
     </section>
 </body>
 

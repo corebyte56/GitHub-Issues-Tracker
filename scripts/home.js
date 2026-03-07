@@ -6,6 +6,64 @@ let totalIssues = document.getElementById("total-issue");
 
 let allCards = document.getElementById("all-cards");
 
+let currentFilter = "all";
+
+function toggleButton(type) {
+    if (type === "open") {
+        openFilterBtn.classList.add("bg-[#4A00FF]", "text-white");
+        openFilterBtn.classList.remove("bg-white", "text-[#64748B]");
+
+        allFilterBtn.classList.add("bg-white", "text-[#64748B]");
+        allFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+
+        closedFilterBtn.classList.add("bg-white", "text-[#64748B]");
+        closedFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+    }
+    else if (type === "closed") {
+        closedFilterBtn.classList.add("bg-[#4A00FF]", "text-white");
+        closedFilterBtn.classList.remove("bg-white", "text-[#64748B]");
+
+
+        allFilterBtn.classList.add("bg-white", "text-[#64748B]");
+        allFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+
+        openFilterBtn.classList.add("bg-white", "text-[#64748B]");
+        openFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+    }
+
+    else if (type === "all") {
+        closedFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+        closedFilterBtn.classList.add("bg-white", "text-[#64748B]");
+
+
+        allFilterBtn.classList.remove("bg-white", "text-[#64748B]");
+        allFilterBtn.classList.add("bg-[#4A00FF]", "text-white");
+
+        openFilterBtn.classList.add("bg-white", "text-[#64748B]");
+        openFilterBtn.classList.remove("bg-[#4A00FF]", "text-white");
+    }
+}
+
+allFilterBtn.addEventListener("click", () => {
+    currentFilter = "all";
+    toggleButton("all");
+    issueCards();
+});
+
+openFilterBtn.addEventListener("click", () => {
+    currentFilter = "open";
+    toggleButton("open");
+    issueCards();
+
+});
+
+closedFilterBtn.addEventListener("click", () => {
+    currentFilter = "closed";
+    toggleButton("closed");
+    issueCards();
+});
+
+
 
 const issueCards = async () => {
     loadingCards();
@@ -13,13 +71,19 @@ const issueCards = async () => {
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
     const data = await res.json();
 
+    let count = 0;
     allCards.innerHTML = '';
     data.data.forEach(issue => {
+
+
+        if (currentFilter === "open" && issue.status !== "open") return;
+        if (currentFilter === "closed" && issue.status !== "closed") return;
+
         const card = document.createElement("div");
         // console.log(issue);
         card.innerHTML = `
         
-        <div  class="cards bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 border-t-4 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-500'}">
+        <div  class="cards  bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 border-t-4 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-500'}">
 
         <div class="flex justify-between items-center">
 
@@ -47,7 +111,7 @@ const issueCards = async () => {
                 ${issue.title}
             </h2>
 
-            <p class="text-[#64748B] text-sm line-clamp-2"">
+            <p class="text-[#64748B] text-sm line-clamp-2">
                 ${issue.description}
             </p>
         </div>
@@ -79,8 +143,7 @@ const issueCards = async () => {
         `
 
         allCards.appendChild(card);
-        let cards = document.querySelectorAll(".cards");
-        totalIssues.innerText = cards.length;
+
 
 
         card.addEventListener("click", (e) => {
@@ -178,8 +241,21 @@ const issueCards = async () => {
 
         });
 
+
+
+        count++;
+
     })
+
+    totalIssues.innerText = count;
+
 };
+
+
+
+
+
+
 
 issueCards();
 
@@ -191,9 +267,4 @@ function loadingCards(count = 6) {
         allCards.appendChild(loading);
     }
 }
-
-allFilterBtn.addEventListener("click", async () => {
-    loadingCards();
-    await issueCards();
-});
 

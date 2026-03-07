@@ -1,6 +1,12 @@
-let allFilterBtn = document.getElementById("all-filter-btn");
-let openFilterBtn = document.getElementById("open-filter-btn");
-let closedFilterBtn = document.getElementById("closed-filter-btn");
+const allFilterBtn = document.getElementById("all-filter-btn");
+const openFilterBtn = document.getElementById("open-filter-btn");
+const closedFilterBtn = document.getElementById("closed-filter-btn");
+
+const pageLoader = document.getElementById("page-loader");
+
+const searchElement = document.getElementById("search");
+
+const newIssue = document.getElementById("new-issue");
 
 let totalIssues = document.getElementById("total-issue");
 
@@ -50,6 +56,14 @@ allFilterBtn.addEventListener("click", () => {
     issueCards();
 });
 
+function showLoader(){
+    pageLoader.classList.remove("hidden");
+}
+
+function hideLoader(){
+    pageLoader.classList.add("hidden");
+}
+
 openFilterBtn.addEventListener("click", () => {
     currentFilter = "open";
     toggleButton("open");
@@ -66,10 +80,12 @@ closedFilterBtn.addEventListener("click", () => {
 
 
 const issueCards = async () => {
-    loadingCards();
+    showLoader();
 
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
     const data = await res.json();
+
+    hideLoader();
 
     let count = 0;
     allCards.innerHTML = '';
@@ -83,7 +99,7 @@ const issueCards = async () => {
         // console.log(issue);
         card.innerHTML = `
         
-        <div  class="cards  bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 border-t-4 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-500'}">
+        <div  class="cards bg-white rounded-lg shadow-md p-6 cursor-pointer flex flex-col gap-4 border-t-4 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-500'}">
 
         <div class="flex justify-between items-center">
 
@@ -171,8 +187,8 @@ const issueCards = async () => {
                     ${issue.status}
                 </span>`}
 
-                <p class="text-[#64748B]">Opened by Fahim Ahmed</p>
-                <p class="text-[#64748B]">22/02/2026</p>
+                <p class="text-[#64748B]">${issue.author}</p>
+                <p class="text-[#64748B]">${issue.updatedAt}</p>
             </div>
         </div>
 
@@ -200,7 +216,7 @@ const issueCards = async () => {
         <div class="grid grid-cols-2 items-center bg-[#F8FAFC] p-6 rounded-lg">
             <div class="space-y-3">
                 <p class="text-[#64748B]">Assignee:</p>
-                <h3 class="font-semibold text-[#1F2937  ]">${issue.assignee}</h3>
+                <h3 class="font-semibold text-[#1F2937  ]">${issue.assignee ? issue.assignee: "Not Found"}</h3>
             </div>
 
             <div class="space-y-3">
@@ -245,7 +261,14 @@ const issueCards = async () => {
 
         count++;
 
-    })
+     newIssue.addEventListener('click', function(e){
+    e.preventDefault();
+
+    currentFilter = "all";
+    toggleButton("all");
+    issueCards();
+});
+     })
 
     totalIssues.innerText = count;
 
@@ -258,13 +281,3 @@ const issueCards = async () => {
 
 
 issueCards();
-
-function loadingCards(count = 6) {
-    allCards.innerHTML = '';
-    for (let i = 0; i < count; i++) {
-        const loading = document.createElement("div");
-        loading.innerHTML = `<span class="loading loading-spinner loading-xl"></span>`;
-        allCards.appendChild(loading);
-    }
-}
-

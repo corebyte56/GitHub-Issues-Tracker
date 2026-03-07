@@ -8,6 +8,8 @@ let allCards = document.getElementById("all-cards");
 
 
 const issueCards = async () => {
+    loadingCards();
+    
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
     const data = await res.json();
 
@@ -84,3 +86,17 @@ const issueCards = async () => {
 };
 
 issueCards();
+
+function loadingCards(count = 6) {
+    allCards.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+        const loading = document.createElement("div");
+        loading.innerHTML = `<span class="loading loading-spinner loading-xl"></span>`;
+        allCards.appendChild(loading);
+    }
+}   
+
+allFilterBtn.addEventListener("click", async () => {
+    loadingCards();
+    await issueCards();
+});

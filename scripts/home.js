@@ -17,7 +17,7 @@ const issueCards = async () => {
         // console.log(issue);
         card.innerHTML = `
         
-        <div class="cards bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 border-t-4 border-green-500">
+        <div class="cards bg-white rounded-lg shadow-md p-6 flex flex-col gap-4 border-t-4 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-500'}">
 
         <div class="flex justify-between items-center">
 
